@@ -3,9 +3,8 @@
 int main(int argc, char const *argv[])
 {
   int Action, choice;
-  listeChainee *repertoire = initialisation();
   char rep[50];
-  initialiserRepertoire(repertoire);
+  listeChainee *repertoire = initialiserRepertoire();
   do
   {
     menu();

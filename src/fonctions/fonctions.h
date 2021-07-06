@@ -5,9 +5,8 @@
 
 #include "fonctions.c"
 
-listeChainee *initialisation();
 void insertion(listeChainee *liste, ouvrier *nouveau);
-void initialiserRepertoire(listeChainee *liste);
+listeChainee *initialiserRepertoire();
 void enregistrerOuvrier(listeChainee *liste);
 void afficherRepertoire(listeChainee *liste);
 void rechercheParNomEtPrenom(ouvrier *courant);

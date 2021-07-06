@@ -29,13 +29,6 @@ typedef struct liste
 * Définition des fonctions et procédures
 */
 
-listeChainee *initialisation()
-{
-  listeChainee *liste = (listeChainee *)malloc(sizeof(listeChainee)); // Déclaration d'une liste avec une allocation dynamique de l'espace mémoire
-  liste->premier = NULL;                                              // Le premier élément de la liste pointe vers NULL car celle-ci est vide
-  return liste;                                                       // On retourne la liste nouvellement initialisée
-}
-
 void insertion(listeChainee *liste, ouvrier *nouveau)
 {
   ouvrier *courant = liste->premier;
@@ -56,10 +49,15 @@ void insertion(listeChainee *liste, ouvrier *nouveau)
   }
 }
 
-void initialiserRepertoire(listeChainee *liste)
+listeChainee *initialiserRepertoire()
 {
-  ouvrier *nouveau = (ouvrier *)malloc(sizeof(ouvrier));
+
+  listeChainee *liste = (listeChainee *)malloc(sizeof(listeChainee)); // Déclaration d'une liste avec une allocation dynamique de l'espace mémoire
+  ouvrier *nouveau = (ouvrier *)malloc(sizeof(ouvrier)); // Déclaration d'une variable de type ouvrier pour stocker les données du fichier
   int count = 0;
+
+  liste->premier = NULL; // La liste nouvellement initialisée ne contient aucun élément donc son premier élément pointe sur NULL
+
   FILE *fichier = fopen("Repertoire_ouvrier.txt", "r"); // Ouverture du fichier en mode lecture
   if (fichier != NULL)
   {
@@ -70,6 +68,7 @@ void initialiserRepertoire(listeChainee *liste)
     }
     fclose(fichier);
   }
+  return liste; // On retourne la liste initialisée avec les données du fichier
 }
 
 void enregistrerOuvrier(listeChainee *liste)
