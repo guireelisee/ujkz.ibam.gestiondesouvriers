@@ -18,4 +18,4 @@ Pour lancer le programme naviguez dans le repertoire ``Gestion des ouvriers`` au
 
 ## Auteurs
 
-* **AMINA Rosalie** _alias_ [@aminarosalie](https://github.com/#)
+* **#** _alias_ [@#](https://github.com/#)
