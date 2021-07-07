@@ -4,7 +4,7 @@ Réalisation du programme de gestion de repertoire d'ouvriers en langage C
 
 ## Démarrage
 
-Pour lancer le programme naviguez dans le repertoire ``Gestion des ouvriers`` au niveau de votre terminal.
+Pour lancer le programme naviguez dans le repertoire ``ujkz.ibam.gestiondesouvriers `` au niveau de votre terminal.
 
  Executez ensuite la commande ``make`` pour compiler et lancer le programme.
 
