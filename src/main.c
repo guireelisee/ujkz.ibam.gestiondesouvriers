@@ -2,31 +2,33 @@
 
 int main(int argc, char const *argv[])
 {
-  int Action, choice;
-  char rep[50];
+  char action[1];
   listeChainee *repertoire = initialiserRepertoire();
   do
   {
     menu();
-    scanf("%s", rep);
-
-    Action = atoi(rep);
-    switch (Action)
+    scanf("%s", action);
+    switch (atoi(action))
     {
     case 1:
       enregistrerOuvrier(repertoire);
+      sauvegardeFichier(repertoire);
       break;
     case 2:
       afficherRepertoire(repertoire);
       break;
     case 3:
-      menuDeRecherche(repertoire);
+      genre(repertoire);
       break;
     case 4:
-      repertoire = retirerOuvrier(repertoire);
+      rechercheParNomEtPrenom(repertoire);
       break;
     case 5:
-      // choice = Quitter(repertoire);
+      repertoire = retirerOuvrier(repertoire);
+      sauvegardeFichier(repertoire);
+      break;
+    case 6:
+      exit(EXIT_SUCCESS);
       break;
     default:
       system("clear");
@@ -35,7 +37,7 @@ int main(int argc, char const *argv[])
     }
     printf("\n\nAppuyer sur Entrée pour revenir au menu ");
     getchar();
-  } while (getchar() == '\n' || choice == 1);
+  } while (getchar() == '\n');
   free(repertoire);
   return 0;
 }

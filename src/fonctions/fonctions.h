@@ -5,13 +5,28 @@
 
 #include "fonctions.c"
 
-void insertion(listeChainee *liste, ouvrier *nouveau);
 listeChainee *initialiserRepertoire();
+
+void sauvegardeFichier(listeChainee *liste);
+
+int matriculeExistant(listeChainee *liste, int matricule);
+
+int estVide(listeChainee *liste);
+
+void inserer(listeChainee *liste, ouvrier *nouveau);
+
 void enregistrerOuvrier(listeChainee *liste);
+
+int longueur(listeChainee *liste);
+
+void rechercheParNomEtPrenom(listeChainee *liste);
+
+void genre(listeChainee *liste);
+
 void afficherRepertoire(listeChainee *liste);
-void rechercheParNomEtPrenom(ouvrier *courant);
-void rechercheParMatricule(ouvrier *courant);
+
 listeChainee *retirerOuvrier(listeChainee *liste);
+
 void menu();
 
 #endif
