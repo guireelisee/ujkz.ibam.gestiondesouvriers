@@ -36,7 +36,7 @@ void sauvegardeFichier(listeChainee *liste)
   FILE *fichier;
   ouvrier *courant = liste->premier;
   fichier = fopen("documents/repertoire_ouvrier.txt", "w"); // Ouverture du fichier en mode d'écriture
-  while (courant != NULL)                 // Parcours de la liste jusqu'à la fin matérialisée par NULL
+  while (courant != NULL)                 // Parcours de la liste jusqu'à la fin
   {
     fprintf(fichier, "%d\t%s\t%s\t%s\t%s\t%s\n", courant->matricule, courant->nom, courant->prenom, courant->telephone, courant->mail, courant->genre);
     courant = courant->suivant;
@@ -44,24 +44,53 @@ void sauvegardeFichier(listeChainee *liste)
   fclose(fichier);
 }
 
+void tronquerMot(char *mot)
+{
+  int tailleMot = 0;
+  while (*mot != '\0')
+  {
+    tailleMot++;
+    if (tailleMot > 30)
+    {
+      *mot = NULL;
+    }
+    mot++;
+  }
+}
+
+void tronquerGenre(char *mot)
+{
+  int tailleMot = 0;
+
+  while (*mot != '\0')
+  {
+    tailleMot++;
+    if (tailleMot > 1)
+    {
+      *mot = NULL;
+    }
+    mot++;
+  }
+}
+
 int estVide(listeChainee *liste)
 {
   return (liste->premier == NULL) ? true : false;
 }
 
-int matriculeExistant(listeChainee *liste, int matricule)
+int matriculeExiste(listeChainee *liste, int matricule)
 {
   ouvrier *courant = liste->premier;
-  int trouver = false;
+  int resultat = false;
   while (courant != NULL)
   {
     if (courant->matricule == matricule)
     {
-      trouver = true;
+      resultat = true;
     }
     courant = courant->suivant;
   }
-  return trouver;
+  return resultat;
 }
 
 void inserer(listeChainee *liste, ouvrier *nouveau)
@@ -109,18 +138,21 @@ void enregistrerOuvrier(listeChainee *liste)
 {
   ouvrier *nouveau = (ouvrier *)malloc(sizeof(ouvrier));
   ouvrier *courant = liste->premier;
-  char rep[taille];
   system("clear");
-  printf("\n----------ENREGISTREMENT----------\n");
+  printf("\n---------- ENREGISTREMENT D'UN OUVRIER ----------\n");
   do
   {
     printf("\nMatricule: ");
     scanf("%d", &nouveau->matricule);
-    if (matriculeExistant(liste, nouveau->matricule) == true)
+    if (matriculeExiste(liste, nouveau->matricule) == true)
     {
       printf("\nMatricule existant. Veuillez le changer !\n");
     }
-  } while (matriculeExistant(liste, nouveau->matricule) == true);
+  } while (matriculeExiste(liste, nouveau->matricule) == true);
+
+  system("clear");
+  printf("\n---------- ENREGISTREMENT D'UN OUVRIER ----------\n");
+  printf("\nMatricule: %d\n",nouveau->matricule);
 
   printf("\nNom: ");
   scanf("%s", nouveau->nom);
@@ -136,31 +168,28 @@ void enregistrerOuvrier(listeChainee *liste)
 
   do
   {
-    printf("\nGenre: [ F(éminin) / M(asculin) ]: ");
+    printf("\nGenre: [ M(asculin) / F(éminin) ]: ");
     scanf("%s", nouveau->genre);
     if (strcasecmp(nouveau->genre, "F") != 0 && strcasecmp(nouveau->genre, "M") != 0)
     {
-      printf("\nVeuillez choisir la bonne lettre !\n");
+      printf("\nVeuillez choisir entre M et F !\n");
     }
-  } while (strncasecmp(nouveau->genre, "F", 1) && strncasecmp(nouveau->genre, "M", 1));
+  } while (strncasecmp(nouveau->genre, "F", 1) != 0 && strncasecmp(nouveau->genre, "M", 1) != 0);
 
-  // nouveau->genre = (strncasecmp(nouveau->genre, "F", 1) == 0) ? "F" : "M";
+  tronquerGenre(nouveau->genre);
 
   inserer(liste, nouveau);
+
   system("clear");
-  printf("\n----------ENREGISTREMENT----------\n");
-  printf("\nAjout réussi !\n");
+  printf("\n---------- ENREGISTREMENT D'UN OUVRIER ----------\n");
+  printf("\nEnregistrement réussi !\n");
 }
 
 int longueur(listeChainee *liste)
 {
   ouvrier *courant = liste->premier;
   int compteur = 0;
-  if (estVide(liste) == true)
-  {
-    printf("\nRépertoire vide\n");
-  }
-  else
+  if (estVide(liste) == false)
   {
     while (courant != NULL)
     {
@@ -175,7 +204,7 @@ void rechercheParNomEtPrenom(listeChainee *liste)
 {
   ouvrier *courant = liste->premier;
   char nom[taille], prenom[taille];
-  int trouver = 0;
+  int compteur = 0;
   system("clear");
   printf("\n----------RECHERCHE----------\n");
   printf("\nNom: ");
@@ -195,17 +224,17 @@ void rechercheParNomEtPrenom(listeChainee *liste)
       printf("\nMail: %s", courant->mail);
       printf("\nGenre: %s", courant->genre);
       printf("\n----------------------------");
-      trouver++;
+      compteur++;
     }
     courant = courant->suivant;
   }
-  if (trouver == 0)
+  if (compteur == 0)
   {
     printf("\nOuvrier non trouvé !\n");
   }
   else
   {
-    printf("\n\n%d ouvrier(s) trouvé(s)\n", trouver);
+    printf("\n\n%d ouvrier(s) trouvé(s)\n", compteur);
   }
 }
 
@@ -223,7 +252,7 @@ void genre(listeChainee *liste)
   {
     while (courant != NULL)
     {
-      if (strncasecmp(courant->genre, "F", 1))
+      if (strncasecmp(courant->genre, "F", 1) == 0)
       {
         printf("\nMatricule: %d", courant->matricule);
         printf("\nNom: %s", courant->nom);
@@ -277,7 +306,7 @@ listeChainee *retirerOuvrier(listeChainee *liste)
   ouvrier *courant = liste->premier;
   ouvrier *next;
   char nom[taille], prenom[taille], rep[taille];
-  int trouver = 0;
+  int compteur = 0;
   system("clear");
   printf("\n----------SUPPRESSION----------\n");
   if (estVide(liste) == true)
@@ -293,7 +322,7 @@ listeChainee *retirerOuvrier(listeChainee *liste)
     scanf("%s", prenom);
     if (strcasecmp(courant->nom, nom) == 0 && strcasecmp(courant->prenom, prenom) == 0)
     {
-      trouver++;
+      compteur++;
       printf("\nVoulez-vous vraiment supprimer l'ouvrier ? [o/n] ");
       scanf("%s", rep);
       while (rep[0] != 'n' && rep[0] != 'N' && rep[0] != 'o' && rep[0] != 'O')
@@ -323,7 +352,7 @@ listeChainee *retirerOuvrier(listeChainee *liste)
       {
         if (strcasecmp(next->nom, nom) == 0 && strcasecmp(next->prenom, prenom) == 0 && next != NULL)
         {
-          trouver++;
+          compteur++;
           printf("\nVoulez-vous vraiment supprimer l'ouvrier ? [o/n] ");
           scanf("%s", rep);
           while (rep[0] != 'n' && rep[0] != 'N' && rep[0] != 'o' && rep[0] != 'O')
@@ -347,13 +376,13 @@ listeChainee *retirerOuvrier(listeChainee *liste)
         }
         if (next == NULL)
         {
-          trouver = 0;
+          compteur = 0;
         }
         courant = next;
         next = next->suivant;
       }
     }
-    if (trouver == 0)
+    if (compteur == 0)
     {
       system("clear");
       printf("\n----------SUPPRESSION----------\n");

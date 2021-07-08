@@ -1,5 +1,5 @@
 1	GUIRE	Elisée	66594866	@	M
 2	KUELA	Assetou	73916210	@	F
-3	TEST	test	673	@@	mfe
-5	MP	mp	203	@1	fe
-6	debug	ok	0239*	@2	mp
+3	la	la	0	@	F
+4	m	de	a	e	m
+5	l	e	m	a	m

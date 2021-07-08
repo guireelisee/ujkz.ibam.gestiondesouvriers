@@ -4,6 +4,7 @@ int main(int argc, char const *argv[])
 {
   char action[1];
   listeChainee *repertoire = initialiserRepertoire();
+
   do
   {
     menu();
@@ -28,6 +29,7 @@ int main(int argc, char const *argv[])
       sauvegardeFichier(repertoire);
       break;
     case 6:
+      free(repertoire);
       exit(EXIT_SUCCESS);
       break;
     default:

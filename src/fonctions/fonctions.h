@@ -9,7 +9,11 @@ listeChainee *initialiserRepertoire();
 
 void sauvegardeFichier(listeChainee *liste);
 
-int matriculeExistant(listeChainee *liste, int matricule);
+int matriculeExiste(listeChainee *liste, int matricule);
+
+void tronquerMot(char *mot);
+
+void tronquerGenre(char *mot);
 
 int estVide(listeChainee *liste);
 
